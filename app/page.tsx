@@ -4,177 +4,282 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { WorkoutSection } from "@/components/workout-section"
 import { ProgressRing } from "@/components/progress-ring"
-import { Dumbbell, Target, Zap } from "lucide-react"
+import { Dumbbell, Zap, Calendar } from "lucide-react"
 import confetti from "canvas-confetti"
 
 const workoutData = {
-  warmup: {
-    title: "Warm-up",
-    icon: "🔥",
+  monday: {
+    title: "Monday - Chest + Tricep",
+    icon: "💪",
+    day: "Day 1",
     exercises: [
       {
-        name: "Hand swings (front & side)",
-        weight: "Bodyweight",
-        reps: "30 sec",
-        sets: 2,
-        notes: "Loosen shoulders",
-        videoUrl: "https://www.youtube.com/watch?v=ncPSh7MBRUk",
-      },
-      {
-        name: "Arm circles",
-        weight: "Bodyweight",
-        reps: "20",
-        sets: 2,
-        notes: "Small → big circles",
-        videoUrl: "https://www.youtube.com/watch?v=P3dzI9opLGE",
-      },
-      {
-        name: "Neck rotation",
-        weight: "Bodyweight",
-        reps: "10",
-        sets: 2,
-        notes: "Slow & controlled",
-        videoUrl: "https://www.youtube.com/watch?v=sk3oOFmQI0Y",
-      },
-      {
-        name: "Waist rotation",
-        weight: "Bodyweight",
-        reps: "20",
-        sets: 2,
-        notes: "Core warm-up",
-        videoUrl: "https://www.youtube.com/watch?v=h6XyzlM8m24",
-      },
-      {
-        name: "Light jumping / march",
-        weight: "Bodyweight",
-        reps: "1 min",
-        sets: 1,
-        notes: "Increase heart rate",
-        videoUrl: "https://www.youtube.com/watch?v=c_Dq_NCzj8M",
-      },
-    ],
-  },
-  legs: {
-    title: "Legs",
-    icon: "🦵",
-    exercises: [
-      {
-        name: "Squats",
-        weight: "Bodyweight",
-        reps: "20",
-        sets: 2,
-        notes: "Keep back straight",
-        videoUrl: "https://www.youtube.com/watch?v=YaXPRqUwItQ",
-      },
-      {
-        name: "Calf raises (machine)",
+        name: "Assisted push-up",
         weight: "Machine",
         reps: "10",
-        sets: 2,
-        notes: "Full stretch & squeeze",
-        videoUrl: "https://www.youtube.com/watch?v=pz66Bw6HJ4s",
-      },
-    ],
-  },
-  chest: {
-    title: "Chest",
-    icon: "💪",
-    exercises: [
-      {
-        name: "Bench Press",
-        weight: "10 kg",
-        reps: "12",
         sets: 3,
-        notes: "Controlled reps",
-        videoUrl: "https://www.youtube.com/watch?v=rT7DgCr-3pg",
+        notes: "Use band or machine assistance",
+        videoUrl: "https://www.youtube.com/watch?v=wRN7inUj4ao",
       },
       {
-        name: "Dumbbell Fly",
-        weight: "5 kg",
-        reps: "12",
+        name: "Flat Dumbbell press",
+        weight: "2 or 5 kg",
+        reps: "10-12",
         sets: 3,
-        notes: "Slow stretch",
-        videoUrl: "https://www.youtube.com/watch?v=eozdVDA78K0",
-      },
-    ],
-  },
-  shoulders: {
-    title: "Shoulders",
-    icon: "🏋️",
-    exercises: [
-      {
-        name: "Dumbbell Shoulder Press",
-        weight: "5 kg",
-        reps: "15",
-        sets: 3,
-        notes: "Don't lock elbows",
-        videoUrl: "https://www.youtube.com/watch?v=qEwKCR5JCog",
-      },
-    ],
-  },
-  biceps: {
-    title: "Biceps",
-    icon: "💪",
-    exercises: [
-      {
-        name: "Dumbbell Bicep Curl",
-        weight: "5 kg",
-        reps: "12",
-        sets: 3,
-        notes: "Strict form",
-        videoUrl: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo",
+        notes: "Controlled movement, don't lock elbows",
+        videoUrl: "https://www.youtube.com/watch?v=pKZMNVbfUzQ",
       },
       {
-        name: "Double Bicep Curl",
-        weight: "5 kg",
-        reps: "12",
-        sets: 3,
-        notes: "Both hands together",
-        videoUrl: "https://www.youtube.com/watch?v=sAq_ocpRh_I",
-      },
-      {
-        name: "Hammer Curl",
-        weight: "5 kg",
-        reps: "12",
-        sets: 3,
-        notes: "Neutral grip",
-        videoUrl: "https://www.youtube.com/watch?v=zC3nLlEvin4",
-      },
-      {
-        name: "Hammer Bicep Curl",
-        weight: "5 kg",
-        reps: "12",
-        sets: 3,
-        notes: "Focus forearms",
-        videoUrl: "https://www.youtube.com/watch?v=TwD-YGVP4Bk",
-      },
-    ],
-  },
-  forearms: {
-    title: "Forearms",
-    icon: "✊",
-    exercises: [
-      {
-        name: "Wrist curls / Forearm exercise",
+        name: "Incline dumbbell press",
         weight: "5 kg",
         reps: "10",
-        sets: 2,
-        notes: "Slow movement",
-        videoUrl: "https://www.youtube.com/watch?v=3VLTzIrnb5g",
+        sets: 3,
+        notes: "Upper chest focus",
+        videoUrl: "https://www.youtube.com/watch?v=sK4Rvug6ufo",
+      },
+      {
+        name: "Machine pec fly or dumbbell fly",
+        weight: "5 kg",
+        reps: "12",
+        sets: 3,
+        notes: "Squeeze at the top",
+        videoUrl: "https://www.youtube.com/watch?v=dY4LduyY8H0",
+      },
+      {
+        name: "Pull over",
+        weight: "5 or 7.5 kg",
+        reps: "15",
+        sets: 3,
+        notes: "Stretch lats and chest",
+        videoUrl: "https://www.youtube.com/watch?v=l0YnKjgikm0",
+      },
+      {
+        name: "Tricep pull down",
+        weight: "Machine",
+        reps: "10",
+        sets: 4,
+        notes: "Keep elbows tucked",
+        videoUrl: "https://www.youtube.com/watch?v=odbyvJm7d8s",
       },
     ],
   },
-  cooldown: {
-    title: "Cool Down",
-    icon: "🧘",
+  tuesday: {
+    title: "Tuesday - Leg Day",
+    icon: "🦵",
+    day: "Day 2",
     exercises: [
       {
-        name: "Stretching (arms, legs, chest)",
+        name: "Goblet squat",
+        weight: "7.5kg or 12.5 kg",
+        reps: "12",
+        sets: 3,
+        notes: "Hold dumbbell at chest",
+        videoUrl: "https://www.youtube.com/watch?v=dUT7_EVG_ok",
+      },
+      {
+        name: "Reverse lunges",
+        weight: "5 kg",
+        reps: "10",
+        sets: 3,
+        notes: "Each leg - control the descent",
+        videoUrl: "https://www.youtube.com/watch?v=9aqXSshQkks",
+      },
+      {
+        name: "Leg extension",
+        weight: "20kg or 30kg",
+        reps: "10",
+        sets: 3,
+        notes: "Full range of motion",
+        videoUrl: "https://www.youtube.com/watch?v=3pOsjZGe10k",
+      },
+      {
+        name: "RDL Dumbbell or Barbell",
+        weight: "5 kg",
+        reps: "12",
+        sets: 3,
+        notes: "Romanian deadlift - feel hamstring stretch",
+        videoUrl: "https://www.youtube.com/watch?v=uUjqvxEWcbo",
+      },
+      {
+        name: "Calf raises",
+        weight: "Bodyweight",
+        reps: "15",
+        sets: 3,
+        notes: "Full stretch at bottom",
+        videoUrl: "https://www.youtube.com/watch?v=0PhsQvV-ZXg",
+      },
+      {
+        name: "Incline walk",
         weight: "—",
         reps: "5 min",
         sets: 1,
-        notes: "Prevent soreness",
-        videoUrl: "https://www.youtube.com/watch?v=g_tea8ZNk5A",
+        notes: "Treadmill incline 10-15%",
+        videoUrl: "https://www.youtube.com/watch?v=Ii71nAaRc_8",
+      },
+    ],
+  },
+  wednesday: {
+    title: "Wednesday - Back + Bicep",
+    icon: "🏋️",
+    day: "Day 3",
+    exercises: [
+      {
+        name: "Assisted pull-up",
+        weight: "Machine",
+        reps: "10",
+        sets: 3,
+        notes: "Build up to unassisted",
+        videoUrl: "https://www.youtube.com/watch?v=gx0RWT7WbmA",
+      },
+      {
+        name: "Lat pull down",
+        weight: "Correct posture weight",
+        reps: "10",
+        sets: 3,
+        notes: "Pull to upper chest",
+        videoUrl: "https://www.youtube.com/watch?v=G0uMUkXXTbo",
+      },
+      {
+        name: "Seated row",
+        weight: "Correct posture weight",
+        reps: "10",
+        sets: 4,
+        notes: "Squeeze shoulder blades",
+        videoUrl: "https://www.youtube.com/watch?v=f_r95UajQcg",
+      },
+      {
+        name: "Dumbbell row",
+        weight: "10 kg",
+        reps: "12",
+        sets: 4,
+        notes: "Single arm - elbow high",
+        videoUrl: "https://www.youtube.com/watch?v=nMFCMNKnLgQ",
+      },
+      {
+        name: "Dumbbell hammer curl",
+        weight: "5 kg",
+        reps: "10",
+        sets: 3,
+        notes: "Neutral grip throughout",
+        videoUrl: "https://www.youtube.com/watch?v=zC3nLlEvin4",
+      },
+      {
+        name: "Dumbbell preacher curl",
+        weight: "5 kg",
+        reps: "10",
+        sets: 3,
+        notes: "Strict form - no swinging",
+        videoUrl: "https://www.youtube.com/watch?v=BPmUhDtdQfw",
+      },
+    ],
+  },
+  thursday: {
+    title: "Thursday - Shoulder + Core",
+    icon: "🔥",
+    day: "Day 4",
+    exercises: [
+      {
+        name: "Shoulder press",
+        weight: "5 or 7.5 kg",
+        reps: "12",
+        sets: 3,
+        notes: "Seated or standing",
+        videoUrl: "https://www.youtube.com/watch?v=qEwKCR5JCog",
+      },
+      {
+        name: "Lateral raises",
+        weight: "5 kg",
+        reps: "10",
+        sets: 3,
+        notes: "Raise to shoulder height",
+        videoUrl: "https://www.youtube.com/watch?v=nnH63icHYXY",
+      },
+      {
+        name: "Vertical shoulder press",
+        weight: "Machine",
+        reps: "10-12",
+        sets: 3,
+        notes: "According to machine weight",
+        videoUrl: "https://www.youtube.com/watch?v=BAZkFGeUy5U",
+      },
+      {
+        name: "Front raises",
+        weight: "5 kg",
+        reps: "10",
+        sets: 3,
+        notes: "Raise to eye level",
+        videoUrl: "https://www.youtube.com/watch?v=vOqq8BfT3gQ",
+      },
+      {
+        name: "Crunches",
+        weight: "Bodyweight",
+        reps: "10",
+        sets: 3,
+        notes: "Focus on upper abs",
+        videoUrl: "https://www.youtube.com/watch?v=Xyd_fa5zoEU",
+      },
+      {
+        name: "Plank until failure",
+        weight: "Bodyweight",
+        reps: "Max",
+        sets: 3,
+        notes: "Maintain straight body line",
+        videoUrl: "https://www.youtube.com/watch?v=z_xEzYVCqWk",
+      },
+    ],
+  },
+  friday: {
+    title: "Friday - Cardio Day",
+    icon: "🏃",
+    day: "Day 5",
+    exercises: [
+      {
+        name: "Running intervals",
+        weight: "—",
+        reps: "20 min",
+        sets: 1,
+        notes: "Run 2 min, walk 1 min",
+        videoUrl: "https://www.youtube.com/watch?v=bYNcFxEOOEc",
+      },
+      {
+        name: "High knees",
+        weight: "Bodyweight",
+        reps: "30 each leg",
+        sets: 3,
+        notes: "Explosive movement",
+        videoUrl: "https://www.youtube.com/watch?v=dKkACF_lgaQ",
+      },
+      {
+        name: "Burpees",
+        weight: "Bodyweight",
+        reps: "10",
+        sets: 3,
+        notes: "Full body movement",
+        videoUrl: "https://www.youtube.com/watch?v=u1floBsVMNs",
+      },
+      {
+        name: "Jumping jacks",
+        weight: "Bodyweight",
+        reps: "30-35",
+        sets: 4,
+        notes: "Keep pace steady",
+        videoUrl: "https://www.youtube.com/watch?v=V4hetzlRkvE",
+      },
+      {
+        name: "Lateral step ups",
+        weight: "Bodyweight",
+        reps: "10 each leg",
+        sets: 3,
+        notes: "Step to the side, focus glutes",
+        videoUrl: "https://www.youtube.com/watch?v=K-74LaOH5Cg",
+      },
+      {
+        name: "Cycle or air bike",
+        weight: "—",
+        reps: "15 min",
+        sets: 1,
+        notes: "Moderate to high intensity",
+        videoUrl: "https://www.youtube.com/watch?v=HY6ut9OaAHI",
       },
     ],
   },
@@ -207,7 +312,6 @@ export default function WorkoutTracker() {
         newSet.delete(exerciseId)
       } else {
         newSet.add(exerciseId)
-        // Trigger confetti
         confetti({
           particleCount: 50,
           spread: 70,
@@ -240,27 +344,27 @@ export default function WorkoutTracker() {
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full glass-card px-4 py-2">
               <Zap className="h-4 w-4 text-accent" />
-              <span className="text-sm text-muted-foreground">Transform Your Body Daily</span>
+              <span className="text-sm text-muted-foreground">3-Month Beginner Program</span>
             </div>
 
             <h1 className="mb-6 text-5xl font-bold tracking-tight text-balance md:text-7xl">
-              <span className="gradient-text">Daily Full Body</span>
+              <span className="gradient-text">Beginner Workout</span>
               <br />
-              Workout Plan
+              5-Day Split
             </h1>
 
             <p className="mb-8 text-lg text-muted-foreground text-balance md:text-xl">
-              Complete guided workout program with animated demonstrations for every exercise. Track your progress and
-              build consistency.
+              Structured 3-month program with video demonstrations. Build strength progressively with chest, legs, back,
+              shoulders, and cardio days.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Button size="lg" className="gap-2 glow-effect">
-                <Target className="h-5 w-5" />
-                Start Workout
+                <Calendar className="h-5 w-5" />
+                View Weekly Plan
               </Button>
               <Button size="lg" variant="outline" className="glass-card bg-transparent">
-                View Progress
+                Track Progress
               </Button>
             </div>
           </div>
@@ -273,9 +377,9 @@ export default function WorkoutTracker() {
           <div className="glass-card rounded-2xl p-8">
             <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
               <div className="text-center md:text-left">
-                <h2 className="mb-2 text-3xl font-bold">Your Progress</h2>
+                <h2 className="mb-2 text-3xl font-bold">Weekly Progress</h2>
                 <p className="text-muted-foreground">
-                  {completedExercises.size} of {totalExercises} exercises completed
+                  {completedExercises.size} of {totalExercises} exercises completed this week
                 </p>
               </div>
 
@@ -316,7 +420,7 @@ export default function WorkoutTracker() {
       {/* Footer */}
       <footer className="border-t border-border py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>Stay consistent. Track progress. Build strength.</p>
+          <p>3-Month Beginner Program • Stay consistent • Track your progress • Build strength</p>
         </div>
       </footer>
     </div>
